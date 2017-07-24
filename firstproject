@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+import RPi.GPIO as GPIO
+import time
+pins = [17,27,22,10,9,11,5,6]
+GPIO.setmode(GPIO.BCM) #set pin mapping
+GPIO.setup(pins, GPIO.OUT) #set output
+GPIO.output(pins,0) #set everything off
+
+def to_morse_code(message):
+    morseAlphabet ={
+        "A" : ".-",
+        "B" : "-...",
+        "C" : "-.-.",
+        "D" : "-..",
+        "E" : ".",
+        "F" : "..-.",
+        "G" : "--.",
+        "H" : "....",
+        "I" : "..",
+        "J" : ".---",
+        "K" : "-.-",
+        "L" : ".-..",
+        "M" : "--",
+        "N" : "-.",
+        "O" : "---",
+        "P" : ".--.",
+        "Q" : "--.-",
+        "R" : ".-.",
+        "S" : "...",
+        "T" : "-",
+        "U" : "..-",
+        "V" : "...-",
+        "W" : ".--",
+        "X" : "-..-",
+        "Y" : "-.--",
+        "Z" : "--..",
+        " " : "/"
+    }
+    output = ""
+    for letter in message.upper():
+        output += morseAlphabet[letter]
+    return output 
+'''
+def flash(pin,amount):
+
+
+    GPIO.output(pins,1)
+    time.sleep(amount)
+    GPIO.output(pins,0)
+    time.sleep(0.1)
+GPIO.output(6,0)
+raw_message = input("Message > ")
+message = to_morse_code(raw_message)
+shorttime = 0.1
+longtime = 0.3
+split = 0.5
+word = 0
+charactercount = 0
+for character in message:
+    if character == ".":
+        flash(pins[0],shorttime)
+    elif character == "/":
+        print(raw_message.split(" ")[word])
+        word += 1
+        flash(pins[0],split)
+    elif character == "-":
+        flash(pins[0],longtime)
+    print(character)
+print(raw_message.split(" ")[-1])
+'''
+GPIO.output(pins,0)
+
