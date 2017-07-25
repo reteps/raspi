@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import RPi.GPIO as GPIO
 import time
-pins = [17,27,22,10,9,11,5,6]
+pins = [4,17,27,22,5,6,13,19]
 def setup_pins(pins):
     GPIO.setmode(GPIO.BCM) #set pin mapping
     GPIO.setup(pins, GPIO.OUT) #set output
@@ -13,9 +13,7 @@ def flash(pin,amount):
     time.sleep(amount)
     GPIO.output(pin,0)
     time.sleep(0.1)
-print(pins)
 for pin in pins:
-    print(pin)
     flash(pin,0.1)
 GPIO.output(pins,0) #set everything off
 
