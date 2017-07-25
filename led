@@ -6,13 +6,14 @@ def setup_pins(pins):
     GPIO.setmode(GPIO.BCM) #set pin mapping
     GPIO.setup(pins, GPIO.OUT) #set output
     GPIO.output(pins,0) #set everything off
-setup_pins(pins)
 
 def flash(pin,amount):
     GPIO.output(pin,1)
     time.sleep(amount)
     GPIO.output(pin,0)
     time.sleep(0.1)
+
+setup_pins(pins)
 for pin in pins:
     flash(pin,0.1)
 GPIO.output(pins,0) #set everything off
