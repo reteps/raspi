@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
 import RPi.GPIO as GPIO
 import time
-def setup_pins(pins):
-    GPIO.setmode(GPIO.BCM)
+import pilights
+pins = [17]
 
-def read(pin):
-    GPIO.setup(pin,GPIO.OUT)
-    GPIO.output(pin, GPIO.LOW)
-    time.sleep(0.1)
-    GPIO.setup(pin, GPIO.IN)
-    time.sleep(0.1)
-    reading = 0
-    
-    while GPIO.input(pin) == 0:
-            print(GPIO.input(pin))
-            reading += 1
-    return reading
-
-setup_pins([19])
-while True:
-    print(read(19))
+lights = pilights.Lights(pins,0.1)
+print("Welcome to Peter's lightshow.")
+lights.lightshow()
