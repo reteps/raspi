@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 import pilights
-pins = [17]
+pins = [4,17,27,22,6,13,19,26]
 
 lights = pilights.Lights(pins,0.1)
 print("Welcome to Peter's lightshow.")

@@ -41,6 +41,7 @@ class Lights():
         for pin in pins:
             command(pin)
             time.sleep(delay)
+
     def onoff(self,pin,delay):
         self.pinon(pin)
         time.sleep(delay)
@@ -59,11 +60,17 @@ class Lights():
         for pin in pins:
             self.onoff(pin,delay)
     #light shows below this line#
-    def slowon(self):
-        self.slow("ON")
+    def slowon(self,delay=None):
+        if delay == None:
+            self.slow("ON")
+        else:
+            self.slow("ON",delay=delay)
 
-    def slowoff(self):
-        self.slow("OFF")
+    def slowoff(self,delay=None):
+        if delay == None:
+            self.slow("OFF")
+        else:
+            self.slow("OFF",delay=delay)
 
     def chase(self,times=1):
         for count in range(times):
@@ -73,6 +80,8 @@ class Lights():
         for count in range(times):
             self.slow("ON")
             self.slow("OFF",direction="LEFT")
+            self.slow("ON",direction="LEFT")
+            self.slow("OFF")
     def cylon(self,times=1,delay=None):
         if delay == None:
             delay = self.delay
@@ -93,11 +102,18 @@ class Lights():
             right = self.pins[size-1:]
         for count in range(times):
             for pinnum in range(size):
-                self.onoff(left[::-1][pinnum],delay=self.delay)
-                self.onoff(right[pinnum],delay=self.delay)
+                self.pinon(left[::-1][pinnum])
+                self.pinon(right[pinnum])
+                time.sleep(self.delay)
+                self.pinoff(left[pinnum])
+                self.pinoff(right[::-1][pinnum])
+
             for pinnum in range(size):
-                self.onoff(left[pinnum],delay=self.delay)
-                self.onoff(right[::-1][pinnum],delay=self.delay)
+                self.pinon(left[pinnum])
+                self.pinon(right[::-1][pinnum])
+                time.sleep(self.delay)
+                self.pinoff(left[pinnum])
+                self.pinoff(right[::-1][pinnum])
     def lightshow(self,waittime=1,descrip=True):
         if descrip:
             command = print
@@ -110,22 +126,22 @@ class Lights():
         self.alloff()
         time.sleep(waittime)
         command("slow on")
-        self.slowon()
+        self.slowon(delay=0.15)
         time.sleep(waittime)
         command("slow off")
-        self.slowoff()
+        self.slowoff(delay=0.15)
         time.sleep(waittime)
         command("chase")
         self.chase()
         time.sleep(waittime)
         command("back and forth")
-        self.backforth()
+        self.backforth(times=3)
         time.sleep(waittime)
         command("cylon")
-        self.cylon(times=2,delay=0.75)
+        self.cylon(times=2,delay=0.075)
         time.sleep(waittime)
         command("random")
-        self.random(times=self.size)
+        self.random(times=10)
         time.sleep(waittime)
         command("branch")
         self.branch(times=2)
